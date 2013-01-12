@@ -11,3 +11,7 @@ nosetests.xml
 
 # Translations
 *.mo
+
+__pycache__
+.project
+.pydevproject
