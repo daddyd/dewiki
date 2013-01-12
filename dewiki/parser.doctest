@@ -1,0 +1,4 @@
+>>> from parser import Parser
+>>> wiki_str = 'it is a [[moat]]ed [[timber framing|half-timbered]] [[manor house]]'
+>>> Parser().parse_string(wiki_str)
+'it is a moated half-timbered manor house'
