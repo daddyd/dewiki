@@ -22,8 +22,13 @@ class Parser(object):
         Parse any string to remove all wiki markup tags
         '''
         self.text = text
-        self.text = re.sub('[\s\w]+\|', '', self.text)
-        self.text = re.sub('[\[\]]', '', self.text)
+        self.text = re.sub('\[{2}(File|Category):\S+\]{2}', '', self.text)
+        self.text = re.sub('[\s\w#()]+\|', '', self.text)
+        self.text = re.sub('(\[{2}|\]{2})', '', self.text)
+        self.text = re.sub('\'{2,5}', '', self.text)
+        self.text = re.sub('(<s>|<!--)[\s\S]+(</s>|-->)', '', self.text)
+        self.text = re.sub('{{cn}}', '', self.text)
+        self.text = re.sub('^={1,6}|={1,6}$', '', self.text)
         return self.text
 
     def parse_string(self, string=''):

@@ -1,4 +1,22 @@
 >>> from parser import Parser
->>> wiki_str = 'it is a [[moat]]ed [[timber framing|half-timbered]] [[manor house]]'
+>>> wiki_str = '\'\'italics\'\', \'\'\'bold\'\'\', and \'\'\'\'\'both\'\'\'\'\''
 >>> Parser().parse_string(wiki_str)
-'it is a moated half-timbered manor house'
+'italics, bold, and both'
+>>> wiki_str = '[[copy edit]] [[copy edit]]ors [[Android (operating system)|Android]] [[Frog#Jumping|the jumping of frogs]]'
+>>> Parser().parse_string(wiki_str)
+'copy edit copy editors Android the jumping of frogs'
+>>> wiki_str = '<s>This topic isn\'t [[WP:N|notable]].</s>'
+>>> Parser().parse_string(wiki_str)
+''
+>>> wiki_str = '<!--This had consensus, discuss at talk page-->'
+>>> Parser().parse_string(wiki_str)
+''
+>>> wiki_str = 'Hello, World.{{cn}}'
+>>> Parser().parse_string(wiki_str)
+'Hello, World.'
+>>> wiki_str = '==Level 2=='
+>>> Parser().parse_string(wiki_str)
+'Level 2'
+>>> wiki_str = '[[File:Wiki.png|thumb|Caption]][[Category:Category name]]'
+>>> Parser().parse_string(wiki_str)
+''
