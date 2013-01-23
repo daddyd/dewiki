@@ -15,27 +15,40 @@ class Parser(object):
         '''
         Constructor
         '''
-        pass
+        self.string = ''
 
-    def __parse(self, text=''):
+    def __list(self, listmatch):
+        return ' ' * (len(listmatch.group()) - 1) + '*'
+
+    def __parse(self, string=''):
         '''
-        Parse any string to remove all wiki markup tags
+        Parse a string to remove and replace all wiki markup tags
         '''
-        self.text = text
-        self.text = re.sub('\[{2}(File|Category):[\s\S]+\]{2}', '', self.text)
-        self.text = re.sub('[\s\w#()]+\|', '', self.text)
-        self.text = re.sub('(\[{2}|\]{2})', '', self.text)
-        self.text = re.sub('\'{2,5}', '', self.text)
-        self.text = re.sub('(<s>|<!--)[\s\S]+(</s>|-->)', '', self.text)
-        self.text = re.sub('{{[\s\S]+}}', '', self.text)
-        self.text = re.sub('^={1,6}|={1,6}$', '', self.text)
-        return self.text
+        self.string = string
+        # all the following regex remove all tags that cannot be rendered
+        # in text
+        self.string = re.sub('\[{2}(File|Category):[\s\S]+\]{2}', '', \
+                             self.string)
+        self.string = re.sub('[\s\w#()]+\|', '', self.string)
+        self.string = re.sub('(\[{2}|\]{2})', '', self.string)
+        self.string = re.sub('\'{2,5}', '', self.string)
+        self.string = re.sub('(<s>|<!--)[\s\S]+(</s>|-->)', '', self.string)
+        self.string = re.sub('{{[\s\S]+}}', '', self.string)
+        self.string = re.sub('^={1,6}|={1,6}$', '', self.string)
+        # search for lists
+        self.listmatch = re.search('^(\*+)', self.string)
+        if self.listmatch:
+            self.string = self.__list(self.listmatch) + re.sub('^(\*+)', \
+                          '', self.string)
+        return self.string
 
     def parse_string(self, string=''):
         '''
         Parse a string object to de-wikified text
         '''
-        return self.__parse(string)
+        self.strings = string.splitlines(1)
+        self.strings = [self.__parse(line) for line in self.strings]
+        return ''.join(self.strings)
 
     def parse_byte(self, byte=None):
         '''

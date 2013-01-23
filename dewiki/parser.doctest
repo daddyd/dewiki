@@ -20,3 +20,6 @@
 >>> wiki_str = '[[File:Wiki.png|thumb|Caption]][[Category:Category name]]'
 >>> Parser().parse_string(wiki_str)
 ''
+>>> wiki_str = "* One\n* Two\n** Two point one\n* Three"
+>>> Parser().parse_string(wiki_str)
+'* One\n* Two\n * Two point one\n* Three'

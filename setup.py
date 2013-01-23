@@ -1,11 +1,11 @@
 import os
 from setuptools import setup, find_packages
 
-version='0.1.0'
+version = '0.1.0'
 readme = os.path.join(os.path.dirname(__file__), 'README.md')
 long_desc = open(readme).read() + '\n\n'
 
-setup(name='dewiki', 
+setup(name = 'dewiki',
       version = version,
       description = 'Python module to remove wiki markup',
       long_description = long_desc,
