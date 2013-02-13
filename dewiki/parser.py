@@ -16,6 +16,15 @@ class Parser(object):
         Constructor
         '''
         self.string = ''
+        # all the following regex remove all tags that cannot be rendered
+        # in text
+        self.wiki_re = re.compile(r"""\[{2}(File|Category):[\s\S]+\]{2}|
+                                        [\s\w#()]+\||
+                                        (\[{2}|\]{2})|
+                                        \'{2,5}|
+                                        (<s>|<!--)[\s\S]+(</s>|-->)|
+                                        {{[\s\S]+}}|
+                                        ^={1,6}|={1,6}$""", re.X)
 
     def __list(self, listmatch):
         return ' ' * (len(listmatch.group()) - 1) + '*'
@@ -25,16 +34,7 @@ class Parser(object):
         Parse a string to remove and replace all wiki markup tags
         '''
         self.string = string
-        # all the following regex remove all tags that cannot be rendered
-        # in text
-        self.string = re.sub('\[{2}(File|Category):[\s\S]+\]{2}', '', \
-                             self.string)
-        self.string = re.sub('[\s\w#()]+\|', '', self.string)
-        self.string = re.sub('(\[{2}|\]{2})', '', self.string)
-        self.string = re.sub('\'{2,5}', '', self.string)
-        self.string = re.sub('(<s>|<!--)[\s\S]+(</s>|-->)', '', self.string)
-        self.string = re.sub('{{[\s\S]+}}', '', self.string)
-        self.string = re.sub('^={1,6}|={1,6}$', '', self.string)
+        self.string = self.wiki_re.sub('', self.string)
         # search for lists
         self.listmatch = re.search('^(\*+)', self.string)
         if self.listmatch:
