@@ -11,11 +11,12 @@ setup(name = 'dewiki',
       long_description = long_desc,
       classifiers = [
                      "Programming Language :: Python",
-                     ("Topic :: Software Development :: Libraries :: Python modules"),
+                     ("Topic :: Software Development :: Libraries :: Python Modules"),
                      ],
       keywords = "wiki",
       author = "Dirk Dierickx",
       author_email = 'dirk.dierickx@gmail.com',
       url = 'https://github.com/daddyd/dewiki',
+      license = 'GPL',
       packages = find_packages()
       )

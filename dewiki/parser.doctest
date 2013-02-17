@@ -1,25 +1,25 @@
 >>> from parser import Parser
->>> wiki_str = '\'\'italics\'\', \'\'\'bold\'\'\', and \'\'\'\'\'both\'\'\'\'\''
->>> Parser().parse_string(wiki_str)
-'italics, bold, and both'
->>> wiki_str = '[[copy edit]] [[copy edit]]ors [[Android (operating system)|Android]] [[Frog#Jumping|the jumping of frogs]]'
->>> Parser().parse_string(wiki_str)
-'copy edit copy editors Android the jumping of frogs'
->>> wiki_str = '<s>This topic isn\'t [[WP:N|notable]].</s>'
->>> Parser().parse_string(wiki_str)
-''
->>> wiki_str = '<!--This had consensus, discuss at talk page-->'
->>> Parser().parse_string(wiki_str)
-''
->>> wiki_str = 'Hello, World.{{cn}}'
->>> Parser().parse_string(wiki_str)
-'Hello, World.'
->>> wiki_str = '==Level 2=='
->>> Parser().parse_string(wiki_str)
-'Level 2'
->>> wiki_str = '[[File:Wiki.png|thumb|Caption]][[Category:Category name]]'
->>> Parser().parse_string(wiki_str)
-''
->>> wiki_str = "* One\n* Two\n** Two point one\n* Three"
->>> Parser().parse_string(wiki_str)
-'* One\n* Two\n * Two point one\n* Three'
+>>> wiki_text = """''italics'', '''bold''', and '''''both'''''
+... [[copy edit]] [[copy edit]]ors [[Android (operating system)|Android]] [[Frog#Jumping|the jumping of frogs]]
+... <s>This topic isn\'t [[WP:N|notable]].</s>
+... <!--This had consensus, discuss at talk page-->
+... Hello, World.{{cn}}
+... ==Level 2==
+... [[File:Wiki.png|thumb|Caption]][[Category:Category name]]
+... * One
+... * Two
+... ** Two point one
+... * Three"""
+>>> dewiki_text = Parser().parse_string(wiki_text)
+>>> print(dewiki_text)
+italics, bold, and both
+copy edit copy editors Android the jumping of frogs
+<BLANKLINE>
+<BLANKLINE>
+Hello, World.
+Level 2
+<BLANKLINE>
+* One
+* Two
+ * Two point one
+* Three
