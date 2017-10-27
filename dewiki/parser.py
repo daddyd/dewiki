@@ -19,7 +19,7 @@ class Parser(object):
         # all the following regex remove all tags that cannot be rendered
         # in text
         self.wiki_re = re.compile(r"""\[{2}(File|Category):[\s\S]+\]{2}|
-                                        [\s\w#()]+\||
+                                        [\s\w#()-]+\||
                                         (\[{2}|\]{2})|
                                         \'{2,5}|
                                         (<s>|<!--)[\s\S]+(</s>|-->)|
